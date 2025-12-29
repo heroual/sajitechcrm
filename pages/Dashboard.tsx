@@ -80,9 +80,9 @@ export default function Dashboard({ user }: { user: User }) {
     ];
 
     // Répartition Stock
-    const stockByCategory = db.categories.map((c: any) => ({
+    const stockByCategory = (db.categories || []).map((c: any) => ({
       name: c.name,
-      value: db.products.filter((p: any) => p.categoryId === c.id).reduce((a: number, b: any) => a + (b.stockQty * b.cost), 0)
+      value: (db.products || []).filter((p: any) => p.categoryId === c.id).reduce((a: number, b: any) => a + (b.stockQty * b.cost), 0)
     })).filter((c: any) => c.value > 0);
 
     // Logistique
@@ -103,7 +103,7 @@ export default function Dashboard({ user }: { user: User }) {
           <KPIModal title="Chiffre d'Affaire" value={formatMAD(analytics?.totalCA || 0)} trend={12} sub="Total TTC Validé" icon={TrendingUp} colorClass="bg-indigo-600" />
           <KPIModal title="Bénéfice Net" value={formatMAD(analytics?.netProfit || 0)} trend={5} sub="Revenus - (Achats + Charges)" icon={Target} colorClass="bg-emerald-600" />
           <KPIModal title="Total Dépenses" value={formatMAD((analytics?.totalExpenses || 0) + (analytics?.totalPurchases || 0))} trend={-2} sub="Achats Stock + Frais Fixes" icon={Wallet} colorClass="bg-rose-600" />
-          <KPIModal title="Clients Actifs" value={db.clients.length} trend={8} sub="Portefeuille CRM" icon={Users} colorClass="bg-blue-600" />
+          <KPIModal title="Clients Actifs" value={(db.clients || []).length} trend={8} sub="Portefeuille CRM" icon={Users} colorClass="bg-blue-600" />
         </div>
 
         {/* SECTION 1: PERFORMANCE FINANCIÈRE & VENTES */}
@@ -132,7 +132,7 @@ export default function Dashboard({ user }: { user: User }) {
           <div className="bg-white p-10 rounded-[3rem] border border-slate-200 shadow-sm flex flex-col">
              <SectionHeader title="Alertes Stock" subtitle="Articles en rupture ou seuil min" icon={Boxes} />
              <div className="space-y-4 flex-1 overflow-y-auto pr-2 scrollbar-hide">
-                {db.products.filter((p: any) => p.stockQty <= p.minStock).slice(0, 6).map((p: any) => (
+                {(db.products || []).filter((p: any) => p.stockQty <= p.minStock).slice(0, 6).map((p: any) => (
                   <div key={p.id} className="flex items-center justify-between p-4 bg-rose-50 border border-rose-100 rounded-2xl">
                      <div>
                         <p className="text-xs font-black text-rose-900 truncate max-w-[120px] uppercase">{p.name}</p>
@@ -143,7 +143,7 @@ export default function Dashboard({ user }: { user: User }) {
                      </Link>
                   </div>
                 ))}
-                {db.products.filter((p: any) => p.stockQty <= p.minStock).length === 0 && (
+                {(db.products || []).filter((p: any) => p.stockQty <= p.minStock).length === 0 && (
                   <div className="h-full flex flex-col items-center justify-center text-slate-300 py-10">
                      <ShieldCheck className="w-12 h-12 mb-4 opacity-20" />
                      <p className="text-[10px] font-black uppercase tracking-widest">Stock en bonne santé</p>
@@ -223,7 +223,7 @@ export default function Dashboard({ user }: { user: User }) {
                     <div className="h-full bg-indigo-600 w-[78%]"></div>
                  </div>
                  <div className="pt-6 space-y-4">
-                    {db.tasks.slice(0, 3).map((t: any) => (
+                    {(db.tasks || []).slice(0, 3).map((t: any) => (
                        <div key={t.id} className="flex items-center gap-4">
                           <div className={`w-2 h-2 rounded-full ${t.priority === 'High' ? 'bg-rose-500' : 'bg-amber-500'}`}></div>
                           <p className="text-xs font-bold text-slate-600 truncate flex-1">{t.title}</p>
@@ -240,7 +240,7 @@ export default function Dashboard({ user }: { user: User }) {
            <div className="bg-white p-10 rounded-[3rem] border border-slate-200 shadow-sm">
               <SectionHeader title="Historique Critique" subtitle="Dernières actions de sécurité" icon={HistoryIcon} />
               <div className="space-y-4">
-                 {db.auditLogs.slice(0, 5).map((log: any) => (
+                 {(db.auditLogs || []).slice(0, 5).map((log: any) => (
                     <div key={log.id} className="flex items-start gap-4 p-4 hover:bg-slate-50 rounded-2xl transition-colors">
                        <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
                           <ShieldCheck className="w-5 h-5 text-slate-400" />
@@ -257,7 +257,7 @@ export default function Dashboard({ user }: { user: User }) {
            <div className="bg-white p-10 rounded-[3rem] border border-slate-200 shadow-sm">
               <SectionHeader title="Support Interne" subtitle="Tickets techniques ouverts" icon={TicketIcon} />
               <div className="space-y-4">
-                 {db.tickets.filter((t: any) => t.status === 'Ouvert').slice(0, 3).map((tk: any) => (
+                 {(db.tickets || []).filter((t: any) => t.status === 'Ouvert').slice(0, 3).map((tk: any) => (
                     <div key={tk.id} className="p-5 bg-slate-50 border border-slate-100 rounded-[2rem] flex justify-between items-center group hover:border-indigo-300 transition-all">
                        <div>
                           <p className="text-[10px] font-black text-indigo-500 uppercase mb-1">{tk.category}</p>
@@ -268,7 +268,7 @@ export default function Dashboard({ user }: { user: User }) {
                        </Link>
                     </div>
                  ))}
-                 {db.tickets.filter((t: any) => t.status === 'Ouvert').length === 0 && (
+                 {(db.tickets || []).filter((t: any) => t.status === 'Ouvert').length === 0 && (
                     <div className="py-12 text-center text-slate-300 font-black uppercase text-[10px]">Aucun ticket en attente</div>
                  )}
               </div>
@@ -299,16 +299,16 @@ export default function Dashboard({ user }: { user: User }) {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {user.role === UserRole.VENDEUR ? (
           <>
-            <KPIModal title="Mes Ventes" value={formatMAD(db.sales.filter((s:any)=>s.userId === user.id).reduce((a:any,b:any)=>a+b.totalTTC,0))} icon={ShoppingCartIcon} colorClass="bg-emerald-600" sub="Volume personnel" />
-            <KPIModal title="Tickets Caisse" value={db.sales.filter((s:any)=>s.userId === user.id).length} icon={ReceiptIcon} colorClass="bg-indigo-600" sub="Nombre de ventes" />
-            <KPIModal title="Prospects" value={db.opportunities.length} icon={Target} colorClass="bg-blue-600" sub="Pipeline commercial" />
-            <KPIModal title="Catalogue" value={db.products.length} icon={Boxes} colorClass="bg-slate-800" sub="Articles disponibles" />
+            <KPIModal title="Mes Ventes" value={formatMAD((db.sales || []).filter((s:any)=>s.userId === user.id).reduce((a:any,b:any)=>a+b.totalTTC,0))} icon={ShoppingCartIcon} colorClass="bg-emerald-600" sub="Volume personnel" />
+            <KPIModal title="Tickets Caisse" value={(db.sales || []).filter((s:any)=>s.userId === user.id).length} icon={ReceiptIcon} colorClass="bg-indigo-600" sub="Nombre de ventes" />
+            <KPIModal title="Prospects" value={(db.opportunities || []).length} icon={Target} colorClass="bg-blue-600" sub="Pipeline commercial" />
+            <KPIModal title="Catalogue" value={(db.products || []).length} icon={Boxes} colorClass="bg-slate-800" sub="Articles disponibles" />
           </>
         ) : (
           <>
-            <KPIModal title="Mes Tâches" value={db.tasks.filter((t:any)=>t.assignedTo === user.id).length} icon={CheckSquare} colorClass="bg-indigo-600" sub="Assignations en cours" />
-            <KPIModal title="Support" value={db.tickets.filter((t:any)=>t.status === 'Ouvert').length} icon={TicketIcon} colorClass="bg-rose-600" sub="Tickets actifs" />
-            <KPIModal title="Services" value={db.services.length} icon={Wrench} colorClass="bg-slate-800" sub="Catalogue interventions" />
+            <KPIModal title="Mes Tâches" value={(db.tasks || []).filter((t:any)=>t.assignedTo === user.id).length} icon={CheckSquare} colorClass="bg-indigo-600" sub="Assignations en cours" />
+            <KPIModal title="Support" value={(db.tickets || []).filter((t:any)=>t.status === 'Ouvert').length} icon={TicketIcon} colorClass="bg-rose-600" sub="Tickets actifs" />
+            <KPIModal title="Services" value={(db.services || []).length} icon={Wrench} colorClass="bg-slate-800" sub="Catalogue interventions" />
             <KPIModal title="Agenda" value="Auj." icon={CalendarIcon} colorClass="bg-blue-600" sub="Voir le planning" />
           </>
         )}
@@ -320,7 +320,7 @@ export default function Dashboard({ user }: { user: User }) {
                <Activity className="w-6 h-6 text-indigo-600" /> Mon Activité Récente
             </h3>
             <div className="space-y-6">
-               {(user.role === UserRole.VENDEUR ? db.sales : db.tasks).slice(0, 5).map((item: any) => (
+               {(user.role === UserRole.VENDEUR ? (db.sales || []) : (db.tasks || [])).slice(0, 5).map((item: any) => (
                   <div key={item.id} className="flex items-center justify-between p-5 bg-slate-50 border border-slate-100 rounded-3xl">
                      <div className="flex items-center gap-4">
                         <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm">
@@ -343,7 +343,7 @@ export default function Dashboard({ user }: { user: User }) {
             </div>
             <h3 className="text-xl font-black uppercase tracking-tight mb-8 relative z-10">Prochaines Échéances</h3>
             <div className="space-y-6 relative z-10">
-               {db.calendarEvents.slice(0, 3).map((ev: any) => (
+               {(db.calendarEvents || []).slice(0, 3).map((ev: any) => (
                   <div key={ev.id} className="flex items-center gap-6 p-4 bg-white/5 border border-white/10 rounded-[2rem]">
                      <div className="text-center bg-indigo-600 px-4 py-2 rounded-2xl shadow-lg">
                         <p className="text-[9px] font-black uppercase text-indigo-200">Jour</p>
@@ -355,7 +355,7 @@ export default function Dashboard({ user }: { user: User }) {
                      </div>
                   </div>
                ))}
-               {db.calendarEvents.length === 0 && (
+               {(db.calendarEvents || []).length === 0 && (
                   <div className="py-10 text-center text-slate-500 font-black uppercase text-[10px]">Aucun événement prévu</div>
                )}
             </div>

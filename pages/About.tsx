@@ -179,7 +179,7 @@ export default function About() {
                  </div>
                  <div>
                     <h4 className="font-black text-indigo-400 mb-2">Comment sauvegarder mes données ?</h4>
-                     <p className="text-sm text-slate-400">Allez dans Paramètres &gt; Base de Données et cliquez sur 'Export .JSON'. Nous vous recommandons de sauvegarder ce fichier sur une clé USB une fois par semaine.</p>
+                    <p className="text-sm text-slate-400">Allez dans Paramètres &gt; Base de Données et cliquez sur 'Export .JSON'. Nous vous recommandons de sauvegarder ce fichier sur une clé USB une fois par semaine.</p>
                  </div>
                  <div>
                     <h4 className="font-black text-indigo-400 mb-2">Le logiciel gère-t-il la TVA marocaine ?</h4>
