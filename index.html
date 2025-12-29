@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAJITECH CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.0.0",
+    "react/": "https://esm.sh/react@19.0.0/",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/": "https://esm.sh/react-dom@19.0.0/",
+    "react-router-dom": "https://esm.sh/react-router-dom@6.28.0?external=react,react-dom",
+    "lucide-react": "https://esm.sh/lucide-react@0.462.0?external=react,react-dom",
+    "recharts": "https://esm.sh/recharts@2.15.0?external=react,react-dom",
+    "jspdf": "https://esm.sh/jspdf@2.5.1",
+    "html2canvas": "https://esm.sh/html2canvas@1.4.1",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.39.7"
+  }
+}
+</script>
+<style>
+    /* Global modern scrollbar styling */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #cbd5e1; /* slate-300 */
+        border-radius: 20px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #6366f1; /* indigo-500 */
+        border: 2px solid transparent;
+        background-clip: content-box;
+    }
+
+    /* For the Sidebar specifically - darker scrollbar */
+    .scrollbar-dark::-webkit-scrollbar-thumb {
+        background: #334155; /* slate-700 */
+    }
+    
+    .scrollbar-dark::-webkit-scrollbar-thumb:hover {
+        background: #4f46e5; /* indigo-600 */
+    }
+
+    /* Utilities to hide scrollbars but keep functionality */
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    /* Selection Color */
+    ::selection {
+        background-color: rgba(99, 102, 241, 0.2);
+        color: #4338ca;
+    }
+
+    /* PDF Export Utility Classes */
+    .pdf-export-mode {
+        background: white !important;
+        padding: 40px !important;
+    }
+</style>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans h-screen overflow-hidden">
+    <div id="root" class="h-full"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "name": "SAJITECH CRM",
+  "description": "A comprehensive offline-first CRM, POS, and Stock Management system with HR and Invoicing capabilities, designed for small businesses.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
